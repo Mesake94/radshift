@@ -1,0 +1,72 @@
+{% extends "admin/base.html" %}
+{% load static i18n %}
+
+{% block title %}{{ title }} | {{ site_title }}{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+{% if OPENWISP_ADMIN_THEME_LINKS %}
+    {% for link in OPENWISP_ADMIN_THEME_LINKS %}
+        <link rel="{{ link.rel }}" type="{{ link.type }}"
+              href="{{ link.href }}" {% if link.media %}media="{{ link.media }}" {% endif %}/>
+    {% endfor %}
+{% else %}
+    <link rel="stylesheet" type="text/css" href="{% static "admin/css/openwisp.css" %}" />
+    <link rel="icon" type="image/x-icon" href="{% static "ui/openwisp/images/favicon.png" %}" />
+{% endif %}
+{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">{{ site_header }}</a></h1>
+{% endblock %}
+
+{% block welcome-msg %}
+    <span class="user">
+        <strong>{% firstof user.get_short_name user.get_username %}</strong>
+    </span>
+{% endblock %}
+{% block userlinks %}
+  {% if show_userlinks_block %}
+    {{ block.super }}
+  {% endif %}
+{% endblock %}
+
+{% block nav-global %}
+<label for="menu-toggle" tabindex="-1" id="nav-activate">
+    <img class="nav-icon" src="{% static "ui/openwisp/images/menu.svg" %}" />
+</label>
+<input type="checkbox" id="menu-toggle" tabindex="-1" />
+
+<div id="main-menu">
+    <a href="{% url 'admin:index' %}"
+       class="home">{% trans 'Home' %}</a>
+    {% for item in openwisp_menu_items %}
+    <a href="{{ item.url }}"
+       class="{{ item.class }}">{{ item.label }}</a>
+    {% endfor %}
+    <div class="account">
+        {% if user.has_usable_password %}
+        <a href="{% url 'admin:password_change' %}"
+           class="change-password">{% trans 'Change password' %}</a>
+        {% endif %}
+        <a href="{% url 'admin:logout' %}"
+           class="logout">{% trans 'Log out' %}</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+{% comment %}
+    we need to put the JS here otherwise
+    if we put it in extrahead it will be
+    loaded before jQuery is loaded
+{% endcomment %}
+{% if has_permission %}
+    <script src="{% static "admin/js/menu.js" %}"></script>
+{% endif %}
+{% if OPENWISP_ADMIN_THEME_JS %}
+    {% for js in OPENWISP_ADMIN_THEME_JS %}
+        <script type="text/javascript" src="{{ js }}"></script>
+    {% endfor %}
+{% endif %}
+{% endblock %}

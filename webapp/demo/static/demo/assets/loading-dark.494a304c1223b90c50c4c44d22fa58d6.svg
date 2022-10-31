@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 440 440"  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <linearGradient x1="1" y1="0" x2="0" y2="0" id="gradient1">
+            <stop offset="0%" style="stop-color:#2d2d2d; stop-opacity:1"></stop>
+            <stop offset="100%" style="stop-color:#2d2d2d; stop-opacity:0.5"></stop>
+        </linearGradient>
+        <linearGradient x1="1" y1="0" x2="0" y2="0" id="gradient2">
+            <stop offset="0%" style="stop-color:#2d2d2d; stop-opacity:0"></stop>
+            <stop offset="100%" style="stop-color:#2d2d2d; stop-opacity:0.5"></stop>
+        </linearGradient>
+    </defs>
+    <g transform="matrix(0,-1,1,0,0,440)">
+        <circle cx="220" cy="220" r="170" stroke-width="80" stroke="url('#gradient1')" fill="none"
+            stroke-dasharray="0 534.5 534.5"></circle>
+        <circle cx="220" cy="220" r="170" stroke-width="80" stroke="url('#gradient2')" fill="none"
+            stroke-dasharray="534.5 1069"></circle>
+    </g>
+</svg>

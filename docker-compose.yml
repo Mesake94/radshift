@@ -1,0 +1,48 @@
+version: '3.6'
+
+networks:
+  radius-wifi:
+    driver: bridge
+
+services:
+  db:
+    image: postgres
+    networks:
+      - radius-wifi
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=radshift
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Root_1421
+    expose:
+      - 5432
+  webapp:
+    image: radshift/webapp:1.0
+    build: ./webapp
+    networks:
+      - radius-wifi
+    volumes:
+      - static:/static
+      - media:/media
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    
+  radius:
+    image: freeradius:custom
+    build: ./radius-server
+    networks:
+      - radius-wifi
+    ports:
+      - "1812:1812/udp"
+      - "1813:1813/udp"
+      - "18120:18120/tcp"
+    depends_on:
+      - db
+
+volumes:
+  static:
+  media:
+  dbdata:
