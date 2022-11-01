@@ -6,11 +6,8 @@ RUN apt-get update -y
 RUN apt-get upgrade -y
 # RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
 RUN apt-get install libpangocairo-1.0-0 -y
-RUN apt-get libq-dev
-
-# install postgresql client
-RUN apt-get install -y postgresql-client
-
+RUN apt-get install libpq-dev -y
+RUN apt-get install build-essential -y
 
 COPY requirements.txt .
 RUN pip install --upgrade pip
@@ -20,5 +17,5 @@ COPY . /app
 COPY entrypoint.sh .
 RUN chmod +x entrypoint.sh
 
-
 ENTRYPOINT ["sh","entrypoint.sh"]
+
