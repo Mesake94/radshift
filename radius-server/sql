@@ -157,7 +157,7 @@ sql {
 	server = "temp-host"
 	port = "temp-port"
 	login = "temp-login"
-	password = "temp-password"
+	password = "Root_1421"
 
 	# Connection info for Mongo
 	# Authentication Without SSL

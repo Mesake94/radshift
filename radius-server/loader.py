@@ -40,7 +40,7 @@ update_content(sql_module_path, 'radius_db = "radius"', f'radius_db = "{DB_NAME}
 update_content(sql_module_path, 'server = "temp-host"', f'server = "{DB_HOST}"')
 update_content(sql_module_path, 'port = 5432', f'port = {DB_PORT}')
 update_content(sql_module_path, 'login = "temp-login"', f'login = "{DB_USER}"')
-update_content(sql_module_path, 'password = "temp-password"', f'password = "{DB_PASSWORD}"')
+# update_content(sql_module_path, 'password = "temp-password"', f'password = "{DB_PASSWORD}"')
 
 
 
