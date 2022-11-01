@@ -1,7 +1,10 @@
 # custom docker image for freeradius
 
+# Specify platform
+
 # Use the official image as a parent image.
-FROM ubuntu:latest
+FROM --platform=linux/arm64/v8 ubuntu:latest
+
 
 RUN apt-get update
 RUN apt-get install -y freeradius freeradius-utils freeradius-rest

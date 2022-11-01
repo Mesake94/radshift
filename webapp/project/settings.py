@@ -181,6 +181,5 @@ MEDIA_ROOT = '/media/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
 # whitenoise configuration
 STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
