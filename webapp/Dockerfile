@@ -6,7 +6,10 @@ RUN apt-get update -y
 RUN apt-get upgrade -y
 # RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
 RUN apt-get install libpangocairo-1.0-0 -y
-RUN apt-get postgresql-dev gcc python3-dev musl-dev -y
+RUN apt-get libq-dev
+
+# install postgresql client
+RUN apt-get install -y postgresql-client
 
 
 COPY requirements.txt .
