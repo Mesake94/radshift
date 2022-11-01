@@ -23,7 +23,7 @@ urlpatterns = [
     path('', include('django_freeradius.urls', namespace='freeradius')),
     path('api/v1/rest-auth/', include('rest_auth.urls')),
     path('api/v1/registration/', include('rest_auth.registration.urls')),
-    path('App/', include('demo.urls')),
+    # path('App/', include('demo.urls')),
 ]
 
 

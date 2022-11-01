@@ -42,7 +42,6 @@ services:
       - "1813:1813/udp"
       - "18120:18120/tcp"
     depends_on:
-      - webapp
       - db
     restart: always
 

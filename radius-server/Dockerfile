@@ -3,7 +3,7 @@
 # Specify platform
 
 # Use the official image as a parent image.
-FROM --platform=linux/arm64/v8 ubuntu:latest
+FROM ubuntu:latest
 
 
 RUN apt-get update
