@@ -1,0 +1,4 @@
+User-Name = "fred"
+User-Password = "Testing123!"
+NAS-IP-Address = 192.168.1.101
+Calling-Station-Id = 76-7C-98-06-87-99

@@ -15,5 +15,6 @@ yarg
 WeasyPrint
 django-environ
 whitenoise
+passlib
 
 

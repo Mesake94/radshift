@@ -1,0 +1,83 @@
+{% load crispy_forms_tags %}
+
+
+<h3 class="mt-4">
+  Manage User Subscriptions
+</h3>
+
+<div>
+    {% for message in messages %}
+        {% if message.tags == 'error' %}
+            <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
+                {{message}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% else %}
+            <div class="alert alert-{{message.tags}} alert-dismissible fade show mt-2" role="alert">
+                {{message}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endif %}
+    {% endfor %}
+  </div>
+
+<!-- Nav tabs -->
+<ul class="nav nav-tabs mt-3" id="myTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="NewPlan-tab" data-bs-toggle="tab" data-bs-target="#NewPlan" type="button" role="tab" aria-controls="New Plan" aria-selected="true">Subscribe User</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="ExistingPlans-tab" data-bs-toggle="tab" data-bs-target="#ExistingPlans" type="button" role="tab" aria-controls="Existing Plans" aria-selected="false">Existing Subscriptions</button>
+  </li>
+
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+  <div class="tab-pane active" id="NewPlan" role="tabpanel" aria-labelledby="New Plan-tab">
+    <div class="card-body">
+        <div class="card-header bg-white"><h3 class="card-title">Add Subscription</h3></div>
+        <div class="mt-3" style="max-width:600px">
+            <form hx-post="{% url 'user-subscription' %}" hx-target="#main-content" hx-swap="innerHTML" hx-indicator="#spinner">
+                {% csrf_token %}
+                {{form|crispy}}
+                <div class="mt-3">
+                  <button class="btn btn-primary btn-lg" type="submit">Subscribe</button>
+                </div>
+            </form>
+        </div>
+       </div>
+  </div>
+  <div class="tab-pane" id="ExistingPlans" role="tabpanel" aria-labelledby="Existing Plans-tab">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-hover" id="user-subscriptions">
+          <thead>
+            <tr>
+              <th scope="col">Subscription</th>
+              <th scope="col">Qouta</th>
+              <th scope="col">User</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for plan in user_plans %}
+              <tr class="">
+                <td scope="row">{{plan.subscription.plan_name}}</td>
+                <td>{{plan.subscription.qouta}}</td>
+                <td>{{plan.user.username}}</td>
+              </tr>
+            {% endfor %}
+            
+          </tbody>
+        </table>
+      </div>
+      
+    </div>
+  </div>
+
+</div>
+<script>
+  $(document).ready(function() {
+    $('#user-subscriptions').DataTable();
+  });
+</script>

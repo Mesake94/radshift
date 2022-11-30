@@ -1,0 +1,175 @@
+{% load crispy_forms_tags %}
+<div class="card mt-4">
+    <div class="card-header">
+        <h3 class="card-title">Monitor Usage</h3>
+    </div>
+    <div class="card-body">
+        <div>
+            {% for message in messages %}
+            {% if message.tags == 'error' %}
+            <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
+                {{message}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% else %}
+            <div class="alert alert-{{message.tags}} alert-dismissible fade show mt-2" role="alert">
+                {{message}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+
+        <!-- <div class="table-responsive">
+            <table class="table table-striped
+            table-hover	
+            align-middle">
+                <thead class="table-light">
+                    <caption>User Data Usage</caption>
+                    <tr>
+                        <th>User</th>
+                        <th>Upload (Octets)</th>
+                        <th>Download (Octets)</th>
+                        <th>Usage (Megabytes)</th>
+                        <th>Calling Station ID (Latest)</th>
+                        <th>Qouta</th>
+                        <th>Has exceeded qouta</th>
+                        <th>Take Action</th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                    {% for data in dataset %}
+                        <tr>
+                            <td>{{data.client.username}}</td>
+                            <td>{{data.total_octets_upload}}</td>
+                            <td>{{data.total_octets_download}}</td>
+                            <td>{{data.total_megabytes}}</td>
+                            <td>{{data.latest_session.calling_station_id}}</td>
+                            <td>{{data.total_qouta}}</td>
+                            <td>{{data.has_exceeded_quota}}</td>
+                            <td>
+                                <div class="btn-group">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="triggerId" data-bs-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">
+                                                Take Action
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-start" aria-labelledby="triggerId">
+                                        <a class="dropdown-item" href="#" data-session_id="{{data.latest_session.id}}"  onclick="disconnectUser(this)">Disconnect</a>
+                                        <a class="dropdown-item" href="#">Disable</a>
+                                        
+                                    </div>
+                                    <script>
+                                        // trigger ajax request to disconnect user
+                                        function disconnectUser(e){
+        
+                                            let session_id = e.dataset.session_id;
+                                            
+                                            const formData = new FormData();
+                                            formData.append('session_id', session_id);
+        
+                                            $.ajax({
+                                                url: "{% url 'user-monitoring' %}",
+                                                type: "POST",
+                                                headers: {
+                                                    "X-CSRFToken": "{{ csrf_token }}",
+                                                },
+                                                data: formData,
+                                                processData: false,
+                                                contentType: false,
+                                                success: function(response){
+                                                    alert(response)
+                                                }
+                                            })
+                                            
+                                        }
+                            
+                                    </script>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+        
+            </table>
+        </div> -->
+        <div class="table-responsive">
+            <table class="table table-striped table-hover" id="user-monitoring">
+                <thead>
+                    <tr>
+                        <th scope="col">User</th>
+                        <th scope="col">Upload (Octets)</th>
+                        <th scope="col">Download (Octets)</th>
+                        <th scope="col">Usage (Megabytes)</th>
+                        <th scope="col">Calling Station ID (Latest)</th>
+                        <th scope="col">Qouta</th>
+                        <th scope="col">Has exceeded qouta</th>
+                        <th scope="col">Take Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for data in dataset %}
+                    <tr class="">
+                        <td scope="row">{{data.client.username}}</td>
+                        <td>{{data.total_octets_upload}}</td>
+                        <td>{{data.total_octets_download}}</td>
+                        <td>{{data.total_megabytes}}</td>
+                        <td>{{data.latest_session.calling_station_id}}</td>
+                        <td>{{data.total_qouta}}</td>
+                        <td>{{data.has_exceeded_quota}}</td>
+                        <td>
+                            <div class="btn-group">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="triggerId"
+                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Take Action
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-start" aria-labelledby="triggerId">
+                                    <a class="dropdown-item" href="#" data-session_id="{{data.latest_session.id}}"
+                                        onclick="disconnectUser(this)">Disconnect</a>
+                                    <a class="dropdown-item" href="#">Disable</a>
+
+                                </div>
+                                <script>
+                                    // trigger ajax request to disconnect user
+                                    function disconnectUser(e) {
+
+                                        let session_id = e.dataset.session_id;
+
+                                        const formData = new FormData();
+                                        formData.append('session_id', session_id);
+
+                                        $.ajax({
+                                            url: "{% url 'user-monitoring' %}",
+                                            type: "POST",
+                                            headers: {
+                                                "X-CSRFToken": "{{ csrf_token }}",
+                                            },
+                                            data: formData,
+                                            processData: false,
+                                            contentType: false,
+                                            success: function (response) {
+                                                alert(response)
+                                            }
+                                        })
+
+                                    }
+
+                                </script>
+                            </div>
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $('#user-monitoring').DataTable();
+    });
+</script>

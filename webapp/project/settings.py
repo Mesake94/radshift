@@ -43,7 +43,6 @@ SECRET_KEY = env('SECRET_KEY', default='q3i6z@j6arvr&fswvw=#t315$&^@9pf5gi+=-3eg
 
 ALLOWED_HOSTS = ['*']
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -64,14 +63,17 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'rest_auth.registration',
-    # 'demo',
     'crispy_forms',
+    'client.apps.ClientConfig',
+    # 'client',
+    'captiveportal',
 ]
 
 SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -100,7 +102,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'project.wsgi.application'
 DJANGO_FREERADIUS_API_TOKEN = '<a-long-secret-value-of-your-choice>'
-
+DJANGO_FREERADIUS_EDITABLE_ACCOUNTING = True
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases

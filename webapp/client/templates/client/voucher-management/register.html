@@ -1,0 +1,86 @@
+{% load crispy_forms_tags %}
+
+
+<h3 class="mt-4">
+  Manage Vouchers
+</h3>
+
+<div>
+    {% for message in messages %}
+        {% if message.tags == 'error' %}
+            <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
+                {{message}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% else %}
+            <div class="alert alert-{{message.tags}} alert-dismissible fade show mt-2" role="alert">
+                {{message}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endif %}
+    {% endfor %}
+  </div>
+
+<!-- Nav tabs -->
+<ul class="nav nav-tabs mt-3" id="myTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="NewVoucher-tab" data-bs-toggle="tab" data-bs-target="#NewVoucher" type="button" role="tab" aria-controls="New Plan" aria-selected="true">Add Vouchers</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="ExistingVouchers-tab" data-bs-toggle="tab" data-bs-target="#ExistingVouchers" type="button" role="tab" aria-controls="Existing Plans" aria-selected="false">Existing Vouchers</button>
+  </li>
+
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+  <div class="tab-pane active" id="NewVoucher" role="tabpanel" aria-labelledby="New Plan-tab">
+    <div class="card-body">
+        <div class="card-header bg-white"><h3 class="card-title">Generate Vouchers</h3></div>
+        <div class="mt-3" style="max-width:600px">
+            <form hx-post="{% url 'voucher-management' %}" hx-target="#main-content" hx-swap="innerHTML" hx-indicator="#spinner">
+                {% csrf_token %}
+                {{form|crispy}}
+                <div class="mt-3">
+                  <button class="btn btn-primary btn-lg" type="submit">Generate</button>
+                </div>
+            </form>
+        </div>
+       </div>
+  </div>
+  <div class="tab-pane" id="ExistingVouchers" role="tabpanel" aria-labelledby="Existing Plans-tab">
+    <div class="card-header bg-white">
+        <h3 class="card-title">Existing Vouchers</h3>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-hover" id="existing-vouchers">
+          <thead>
+            <tr>
+              <th scope="col">Voucher Code</th>
+              <th scope="col">Qouta</th>
+              <th scope="col">Active</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for voucher in vouchers %}
+                <tr>
+                    <td>{{voucher.voucher}}</td>
+                    <td>{{voucher.subscription.qouta}}</td>
+                    <td>{{voucher.is_active}}</td>
+                </tr>
+            {% endfor %}
+            
+          </tbody>
+        </table>
+      </div>
+      
+    </div>
+  </div>
+
+</div>
+<script>
+    $(document).ready(function() {
+        $('#existing-vouchers').DataTable();
+    } );
+</script>
